@@ -15,7 +15,7 @@ services:
     expose:
       - "8080" # in case you want to place a proxy, eg. nginx, in front of synkronus
     volumes:
-      - appdata:/app/data
+      - appdata:/app/data # if you mount directly on the host, remember to set 1000 to owner (sudo chown -R 1000:1000 ...)
     depends_on:
       - db
     restart: unless-stopped
