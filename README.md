@@ -36,6 +36,31 @@ cd synkronus-quickstart
 
 Optionally you can choose to map the volumes to specific mountpoints on the host.
 
+1. Prepare a database for synkonus
+
+   Start only the `db` service from Docker Compose:
+
+   ```bash
+   docker compose up db
+   ```
+
+   This will start the database container and keep it running in the foreground.
+
+   In a separate terminal, make the `create_sync_db.sh` script executable:
+
+   ```bash
+   chmod +x ./create_sync_db.sh
+   ```
+
+   Then run the script to create the Synkronus database and user:
+
+   ```bash
+   ./create_sync_db.sh
+   ```
+
+   The script will connect to the running `db` container and set up the required database and user account.
+
+
 1. Start the services:
 
 ```bash

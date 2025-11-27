@@ -6,20 +6,24 @@ services:
     environment:
       PORT: "8080"
       LOG_LEVEL: "info"
-      DB_CONNECTION: "postgres://synkronus_user:strong_password@db:5432/synkronus?sslmode=disable"
-      # JWT Secret MUST be changed in production! Generate a new one with: openssl rand -base64 32
-      JWT_SECRET: "rcN76PE4cYMYZ9D3iy71eBqHsZ4feddcdAF7Zlsfom0="
+      DB_CONNECTION: "postgres://synkronus_user:strong_password@db:5432/synkronus?sslmode=disable" # create with ~/create_synk_db demo      
+      JWT_SECRET: "rcN76PE4cYMYZ9D3iy71eBqHsZ4feddcdAF7Zlsfom0=" # Generate a new one with: openssl rand -base64 32
       ADMIN_USERNAME: "please_change_the_username"
-      ADMIN_PASSWORD: "you_really_should_change_the_password_as_well"
+      ADMIN_PASSWORD: "change_the_password_as_well"
       APP_BUNDLE_PATH: "/app/data/app-bundles"
       MAX_VERSIONS_KEPT: "2"
     expose:
       - "8080" # in case you want to place a proxy, eg. nginx, in front of synkronus
     volumes:
-      - appdata:/app/data/app-bundles
+      - appdata:/app/data
     depends_on:
       - db
     restart: unless-stopped
+    healthcheck: ## This can be removed when the synkronus image is updated to support HEAD requests for /health
+      test: ["CMD", "wget", "-qO-", "--tries=1", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3    
 
   db:
     image: postgres:17
