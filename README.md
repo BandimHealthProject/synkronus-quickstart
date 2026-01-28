@@ -24,7 +24,7 @@ git clone https://github.com/OpenDataEnsemble/synkronus-quickstart.git
 cd synkronus-quickstart
 ```
 
-1. Adjust env variables the `docker-compose.yml` file.
+2. Adjust env variables the `docker-compose.yml` file.
 
   - In the postgres service:
     - POSTGRES_PASSWORD
@@ -33,6 +33,19 @@ cd synkronus-quickstart
     - JWT_SECRET (generate a new one with: 'openssl rand -base64 32')
     - ADMIN_USERNAME
     - ADMIN_PASSWORD
+
+3. Start the services:
+
+```bash
+docker compose up -d
+```
+
+4. Verify the server is running:
+
+```bash
+curl http://localhost:8080/health
+# Should return "OK"
+```
 
 Optionally you can choose to map the volumes to specific mountpoints on the host.
 
@@ -59,20 +72,6 @@ Optionally you can choose to map the volumes to specific mountpoints on the host
    ```
 
    The script will connect to the running `db` container and set up the required database and user account.
-
-
-1. Start the services:
-
-```bash
-docker compose up -d
-```
-
-1. Verify the server is running:
-
-```bash
-curl http://localhost:8080/health
-# Should return "OK"
-```
 
 ---
 
